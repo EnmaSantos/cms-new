@@ -17,7 +17,7 @@ export class MessageEditComponent {
       Date.now().toString(),
       this.subject,
       this.msgText,
-      'Current User' // Replace with actual sender
+      'Current User' // Temporary until we learn how to login
     );
     this.messageAdded.emit(newMessage);
     this.clearFields();
