@@ -9,7 +9,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12">
-            <!-- Message Items -->
+            <!-- Message List -->
             <cms-message-item 
               *ngFor="let message of messages"
               [message]="message"
@@ -18,9 +18,9 @@
         </div>
       </div>
       <div class="panel-footer">
-        <!-- Message Editor -->
+        <!-- Message Editor with event binding -->
         <cms-message-edit 
-          (messageAdded)="onMessageAdded($event)"
+          (addMessageEvent)="onAddMessage($event)"
         ></cms-message-edit>
       </div>
     </div>

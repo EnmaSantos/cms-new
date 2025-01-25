@@ -8,12 +8,14 @@ import { Message } from '../message.model';
   standalone: false
 })
 export class MessageListComponent {
+  // Sample messages
   messages: Message[] = [
-    new Message('1', 'Meeting Notes', 'Team meeting at 2 PM today', 'John Doe'),
-    new Message('2', 'Project Update', 'Deadline extended to Friday', 'Jane Smith')
+    new Message('1', 'Welcome!', 'Welcome to our messaging system', 'Admin'),
+    new Message('2', 'Reminder', 'Team meeting at 2 PM today', 'Project Manager'),
+    new Message('3', 'Update', 'New features deployed successfully', 'Dev Team')
   ];
 
-  onMessageAdded(message: Message) {
-    this.messages.push(message);
+  onAddMessage(newMessage: Message) {
+    this.messages.push(newMessage);
   }
 }
