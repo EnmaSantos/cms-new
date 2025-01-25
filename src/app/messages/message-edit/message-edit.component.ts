@@ -1,12 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { Message } from '../message.model';
 
 @Component({
   selector: 'cms-message-edit',
-  standalone: false,
-  
   templateUrl: './message-edit.component.html',
-  styleUrl: './message-edit.component.css'
+  styleUrls: ['./message-edit.component.css'],
+  standalone: false
 })
 export class MessageEditComponent {
+  @Output() messageAdded = new EventEmitter<Message>();
+  subject = '';
+  msgText = '';
 
+  onSend() {
+    const newMessage = new Message(
+      Date.now().toString(),
+      this.subject,
+      this.msgText,
+      'Current User' // Replace with actual sender
+    );
+    this.messageAdded.emit(newMessage);
+    this.clearFields();
+  }
+
+  clearFields() {
+    this.subject = '';
+    this.msgText = '';
+  }
 }
