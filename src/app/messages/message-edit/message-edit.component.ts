@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+// message-edit.component.ts
+import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Message } from '../message.model';
 
 @Component({
@@ -8,23 +9,28 @@ import { Message } from '../message.model';
   standalone: false
 })
 export class MessageEditComponent {
-  @Output() messageAdded = new EventEmitter<Message>();
-  subject = '';
-  msgText = '';
+  @Output() addMessageEvent = new EventEmitter<Message>();
+  @ViewChild('subject') subjectInputRef!: ElementRef;
+  @ViewChild('msgText') msgTextInputRef!: ElementRef;
+  currentSender = 'Your Name'; // Replace with actual sender name
 
-  onSend() {
+  onSendMessage() {
+    const subject = this.subjectInputRef.nativeElement.value;
+    const msgText = this.msgTextInputRef.nativeElement.value;
+    
     const newMessage = new Message(
-      Date.now().toString(),
-      this.subject,
-      this.msgText,
-      'Current User' // Temporary until we learn how to login
+      Date.now().toString(), // Generate unique ID
+      subject,
+      msgText,
+      this.currentSender
     );
-    this.messageAdded.emit(newMessage);
-    this.clearFields();
+
+    this.addMessageEvent.emit(newMessage);
+    this.onClear();
   }
 
-  clearFields() {
-    this.subject = '';
-    this.msgText = '';
+  onClear() {
+    this.subjectInputRef.nativeElement.value = '';
+    this.msgTextInputRef.nativeElement.value = '';
   }
 }
