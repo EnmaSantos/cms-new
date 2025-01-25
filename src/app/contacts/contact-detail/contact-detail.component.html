@@ -17,8 +17,15 @@
   
 
     <div class="panel-body">
+      <img
+      [src]="contact.imageUrl"
+      [alt]="contact.name"
+      class="img-thumbnail"
+      style="max-width: 150px; margin-bottom: 15px;"
+    >
       <p><strong>Email:</strong> {{ contact.email }}</p>
       <p><strong>Phone:</strong> {{ contact.phone }}</p>
+      
     </div>
   </div>
   
