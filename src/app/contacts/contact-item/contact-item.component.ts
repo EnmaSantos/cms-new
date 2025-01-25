@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Contact } from '../contact.model';
 
 @Component({
   selector: 'cms-contact-item',
-  standalone: false,
-  
   templateUrl: './contact-item.component.html',
-  styleUrl: './contact-item.component.css'
+  styleUrls: ['./contact-item.component.css'],
+  standalone: false,
 })
 export class ContactItemComponent {
-
+  @Input() contact: Contact; // Add this line
 }

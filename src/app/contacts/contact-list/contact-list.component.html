@@ -6,21 +6,10 @@
   
     <div class="panel-body">
       <ul class="list-group">
-        <!-- Loop through each contact -->
-        <li
-          class="list-group-item"
+        <cms-contact-item 
           *ngFor="let contact of contacts"
-        >
-          <!-- Display contact image -->
-          <img
-            [src]="contact.imageUrl"
-            [alt]="contact.name"
-            class="img-thumbnail"
-            style="max-width: 50px; margin-right: 10px;"
-          />
-      
-          {{ contact.name }}
-        </li>
+          [contact]="contact"
+        ></cms-contact-item>
       </ul>
     </div>
   </div>
