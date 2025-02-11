@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Document } from '../document.model';
 
 @Component({
@@ -8,6 +8,9 @@ import { Document } from '../document.model';
   standalone: false
 })
 export class DocumentListComponent {
+
+  @Output() selectedDocumentEvent = new EventEmitter<Document>();
+
   
   documents: Document[] = [
     new Document(
@@ -23,6 +26,27 @@ export class DocumentListComponent {
       'Detailed technical requirements', 
       'https://example.com/spec.pdf', 
       []
-    )
+    ),
+
+    new Document(
+      '3', 
+      'Project Proposal', 
+      'Initial project documentation', 
+      'https://example.com/proposal.pdf', 
+      []
+    ),
+    new Document(
+      '4', 
+      'Technical Spec', 
+      'Detailed technical requirements', 
+      'https://example.com/spec.pdf', 
+      []
+    ),
+
   ];
+
+   // Method to emit the selected document
+   onSelectedDocument(document: Document) {
+    this.selectedDocumentEvent.emit(document); 
+  }
 }
