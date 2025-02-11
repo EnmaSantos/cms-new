@@ -8,5 +8,5 @@ import { Document } from '../document.model';
   standalone: false,
 })
 export class DocumentItemComponent {
-  @Input() document: Document; // Add this line
+  @Input() document: Document; 
 }
