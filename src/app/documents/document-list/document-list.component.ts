@@ -1,52 +1,25 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Document } from '../document.model';
+import { DocumentService } from '../document.service';
 
 @Component({
   selector: 'cms-document-list',
+  standalone: false,
+  
   templateUrl: './document-list.component.html',
-  styleUrl: './document-list.component.css',
-  standalone: false
+  styleUrl: './document-list.component.css'
 })
 export class DocumentListComponent {
 
-  @Output() selectedDocumentEvent = new EventEmitter<Document>();
-
+  documents: Document[] = [];
   
-  documents: Document[] = [
-    new Document(
-      '1', 
-      'Project Proposal', 
-      'Initial project documentation', 
-      'https://example.com/proposal.pdf', 
-      []
-    ),
-    new Document(
-      '2', 
-      'Technical Spec', 
-      'Detailed technical requirements', 
-      'https://example.com/spec.pdf', 
-      []
-    ),
+  constructor(private documentService: DocumentService) {}
+  
+    ngOnInit() {
+      this.documents = this.documentService.getDocuments();
+    }
 
-    new Document(
-      '3', 
-      'Project Proposal', 
-      'Initial project documentation', 
-      'https://example.com/proposal.pdf', 
-      []
-    ),
-    new Document(
-      '4', 
-      'Technical Spec', 
-      'Detailed technical requirements', 
-      'https://example.com/spec.pdf', 
-      []
-    ),
-
-  ];
-
-   // Method to emit the selected document
-   onSelectedDocument(document: Document) {
-    this.selectedDocumentEvent.emit(document); 
+  onSelectedDocument(document: Document) {
+    this.documentService.documentSelectedEvent.emit(document);
   }
 }

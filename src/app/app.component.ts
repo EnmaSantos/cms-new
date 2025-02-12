@@ -3,17 +3,14 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'cms-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  standalone: false
+  standalone: false,
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'cms';
-  
+  selectedFeature: string = 'contacts';
 
-  selectedFeature: string = 'documents';
-
-
-  switchView(feature: string) {
-    this.selectedFeature = feature;
+  switchView(selectedFeature: string): void {
+    this.selectedFeature = selectedFeature;
   }
 }

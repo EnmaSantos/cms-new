@@ -3,16 +3,15 @@ import { Component, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'cms-header',
   standalone: false,
+  
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'], // Fixed typo here: styleUrl -> styleUrls
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   @Output() selectedFeatureEvent = new EventEmitter<string>();
+  collapsed=true;
 
-  // Add the collapsed property
-  collapsed = true;
-
-  onSelected(selectedFeature: string) {
+  onSelected(selectedFeature: string): void {
     this.selectedFeatureEvent.emit(selectedFeature);
   }
 }

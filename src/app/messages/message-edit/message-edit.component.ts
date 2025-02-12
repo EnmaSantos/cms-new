@@ -1,36 +1,45 @@
-// message-edit.component.ts
-import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+
 import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-edit',
+  standalone: false,
+  
   templateUrl: './message-edit.component.html',
-  styleUrls: ['./message-edit.component.css'],
-  standalone: false
+  styleUrl: './message-edit.component.css'
 })
 export class MessageEditComponent {
-  @Output() addMessageEvent = new EventEmitter<Message>();
-  @ViewChild('subject') subjectInputRef!: ElementRef;
-  @ViewChild('msgText') msgTextInputRef!: ElementRef;
-  currentSender = 'Your Name'; // Replace with actual sender name
+  @ViewChild('subject', {static: false}) subjectRef: ElementRef;
+  @ViewChild('msgText', {static: false}) msgTextRef: ElementRef;
 
-  onSendMessage() {
-    const subject = this.subjectInputRef.nativeElement.value;
-    const msgText = this.msgTextInputRef.nativeElement.value;
-    
+  currentSender: string = '1';
+
+  constructor(private messageService: MessageService) {}
+
+  onSendMessage(): void {
+
+    event.preventDefault();
+
+    const subject = this.subjectRef.nativeElement.value;
+    const msgText = this.msgTextRef.nativeElement.value;
+
     const newMessage = new Message(
-      Date.now().toString(), // Generate unique ID
+      '1', 
       subject,
       msgText,
       this.currentSender
     );
-
-    this.addMessageEvent.emit(newMessage);
+  
+    this.messageService.addMessage(newMessage);
+  
     this.onClear();
   }
 
-  onClear() {
-    this.subjectInputRef.nativeElement.value = '';
-    this.msgTextInputRef.nativeElement.value = '';
+  onClear(): void {
+    this.subjectRef.nativeElement.value = '';
+    this.msgTextRef.nativeElement.value = '';
   }
+  
 }

@@ -1,9 +1,0 @@
-/* Default state: Hide the dropdown menu */
-.dropdown-menu {
-    display: none;
-  }
-  
-  /* When the 'open' class is applied, show the dropdown menu */
-  .dropdown.open .dropdown-menu {
-    display: block;
-  }
