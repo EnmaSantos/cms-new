@@ -1,35 +1,32 @@
-import {Message} from "./message.model";
+import {Message} from './message.model';
 
 export const MOCKMESSAGES: Message[] = [
   {
-    id: "1",
-    subject: "New Product Announcement",
-    msgText: "Announcing the launch of our latest product line.",
-    sender: "5"
+    id: '1', 
+   subject: 'CIT 366 assignment 1', 
+   msgText: 'The grades for this assignment have been posted.', 
+   sender: '7'},
+  {
+    id: '2', 
+    subject: 'CIT 366 assignment 3', 
+    msgText: 'When is assignment 3 due?', 
+    sender: '13'},
+  {
+    id: '3',
+    subject: 'CIT 366 assignment 3 due date',
+    msgText: 'Assignment 3 is due on Saturday at 11:30 PM.',
+    sender: '7'
   },
   {
-    id: "2",
-    subject: "Quarterly Earnings Update",
-    msgText: "The quarterly earnings report is now available for review.",
-    sender: "8"
+    id: '4',
+    subject: 'Assignment 3 help',
+    msgText: 'Can I meet with you sometime? I need help with assignment 3.',
+    sender: '3'
   },
   {
-    id: "3",
-    subject: "Upcoming Web Conference",
-    msgText: "Join our annual web conference next month to hear industry insights.",
-    sender: "5"
-  },
-  {
-    id: "4",
-    subject: "HR Policy Update",
-    msgText: "Please read the updated HR policies in the employee portal.",
-    sender: "7"
-  },
-  {
-    id: "5",
-    subject: "Security Alert",
-    msgText: "Reminder: Change your password by the end of the week to maintain security.",
-    sender: "2"
-  }
+    id: '5', 
+    subject: 'Assignment 3 help', 
+    msgText: 'I can meet with you today at 4:00 PM in my office.', 
+    sender: '7'}
 ];
 
