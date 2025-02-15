@@ -1,17 +1,13 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'cms-header',
-  standalone: false,
-  
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'],
+  standalone: false
 })
 export class HeaderComponent {
-  @Output() selectedFeatureEvent = new EventEmitter<string>();
-  collapsed=true;
+  collapsed = true;
 
-  onSelected(selectedFeature: string): void {
-    this.selectedFeatureEvent.emit(selectedFeature);
-  }
+  // Remove the selectedFeatureEvent property and onSelected() method
 }

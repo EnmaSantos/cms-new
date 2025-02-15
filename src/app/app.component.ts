@@ -4,13 +4,10 @@ import { Component } from '@angular/core';
   selector: 'cms-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'] // Corrected 'styleUrl' to 'styleUrls'
 })
 export class AppComponent {
   title = 'cms';
-  selectedFeature: string = 'contacts';
 
-  switchView(selectedFeature: string): void {
-    this.selectedFeature = selectedFeature;
-  }
+  // Remove the selectedFeature property and switchView() method
 }
