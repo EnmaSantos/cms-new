@@ -1,34 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ContactService } from '../contact.service'; // Adjust the path as necessary
+import { ActivatedRoute, Router, Params } from '@angular/router';
+
 import { Contact } from '../contact.model';
+import { ContactService } from '../contact.service';
 
 @Component({
   selector: 'cms-contact-detail',
+  standalone: false,
+  
   templateUrl: './contact-detail.component.html',
-  styleUrls: ['./contact-detail.component.css'],
-  standalone: false
+  styleUrl: './contact-detail.component.css'
 })
 export class ContactDetailComponent implements OnInit {
-  contact: Contact;
+  contact!: Contact;
 
   constructor(
-    private route: ActivatedRoute,
     private contactService: ContactService,
+    private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.contact = new Contact ('0', '', '', '', '', null)
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      this.contact = this.contactService.getContact(id);
-    });
+    this.route.params
+      .subscribe((params: Params) => {
+        const id = params['id'];
+        this.contact = this.contactService.getContact(id)!;
+      });
   }
 
   onDelete(): void {
-    if (confirm('Are you sure you want to delete this contact?')) {
-      this.contactService.deleteContact(this.contact);
-      this.router.navigate(['/contacts']); // Navigate back to the contact list
-    }
+    if (!this.contact) return;
+    this.contactService.deleteContact(this.contact);
+    this.router.navigate(['/contacts']);
   }
 }

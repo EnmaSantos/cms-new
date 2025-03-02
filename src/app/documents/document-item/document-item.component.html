@@ -1,7 +1,7 @@
-<a
-  class="list-group-item clearfix documentDiv"
-  [routerLink]="['/documents', document.id]"
-  routerLinkActive="active"
->
-  {{ document?.name }}
-</a>
+<a class="list-group-item clearfix documentDiv" 
+[routerLink]="['/documents', document.id]"
+routerLinkActive="active"
+[routerLinkActiveOptions]="{ exact: true }">
+    {{ document?.name }}
+  </a>
+  

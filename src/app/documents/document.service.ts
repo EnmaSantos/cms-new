@@ -1,87 +1,103 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
-  documents: Document[] = [];
-  documentSelectedEvent = new EventEmitter<Document>();
-  documentChangedEvent = new EventEmitter<Document[]>(); 
-  documentListChangedEvent = new Subject<Document[]>();
-  maxDocumentId: number;
+   documents: Document [] =[];
+   private maxDocumentId: number;
+   documentSelectedEvent = new EventEmitter<Document>();
+   documentChangedEvent = new EventEmitter<Document[]>();
+   documentListChanged = new Subject<Document[]>();
+   
+   constructor() {
+      this.documents = MOCKDOCUMENTS;
+      this.maxDocumentId = this.getMaxId();
+   }
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
-  }
+   getDocuments(): Document[] {
+      return this.documents.slice();
+   }
 
-  getMaxId(): number {
-    let maxId = 0;
-    
-    for (const document of this.documents) {
-      const currentId = parseInt(document.id);
-      if (currentId > maxId) {
-        maxId = currentId;
+   getDocument(id: string): Document | null {
+      for (let document of this.documents) {
+        if (document.id === id) {
+          return document;
+        }
       }
+      return null;
     }
-    
-    return maxId;
-  }
 
-  getDocuments() {
-    return this.documents.slice();
-  }
+   //  deleteDocument(document: Document) {
+   //    if (!document) {
+   //       return;
+   //    }
+   //    const pos = this.documents.indexOf(document);
+   //    if (pos < 0) {
+   //       return;
+   //    }
+   //    this.documents.splice(pos, 1);
+   //    this.documentChangedEvent.emit(this.documents.slice());
+   // }
 
-  getDocument(id: string): Document | null {
-    for (let document of this.documents) {
-      if (document.id === id) {
-        return document;
+   getMaxId(): number {
+      let maxId = 0;
+
+      for (let document of this.documents) {
+         const currentId = parseInt(document.id);
+         if (currentId > maxId) {
+            maxId = currentId;
+         }
       }
-    }
-    return null;
+
+      return maxId;
+   }
+
+   addDocument(document: Document): void {
+      if (!document) {
+         return;
+      }
+
+      this.maxDocumentId = this.getMaxId() + 1;
+      document.id = this.maxDocumentId.toString();
+
+      this.documents.push(document);
+      const documentsListClone = this.documents.slice();
+      this.documentListChanged.next(documentsListClone);
+   }
+
+   updateDocument(originalDocument: Document, newDocument: Document): void {
+      if (!originalDocument || !newDocument) { 
+          return;
+      }
+  
+      const pos = this.documents.indexOf(originalDocument);
+      if (pos < 0) {
+          return;
+      }
+  
+      newDocument.id = originalDocument.id;
+      this.documents[pos] = newDocument;
+  
+      const documentsListClone = this.documents.slice();
+      this.documentListChanged.next(documentsListClone);
   }
 
-  addDocument(newDocument: Document) {
-    if (newDocument === undefined || newDocument === null) {
-      return;
-    }
-    
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
-  }
+  deleteDocument(document: Document): void {
+   if (!document) {
+      return
+   }
 
-  updateDocument(originalDocument: Document, newDocument: Document) {
-    if (originalDocument === undefined || originalDocument === null || 
-        newDocument === undefined || newDocument === null) {
-      return;
-    }
-    
-    const pos = this.documents.indexOf(originalDocument);
-    if (pos < 0) {
-      return;
-    }
-    
-    newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
-  }
+   const pos = this.documents.indexOf(document)
+   if (pos < 0) {
+      return
+   }
 
-  deleteDocument(document: Document) {
-    if (!document) {
-      return;
-    }
-    const pos = this.documents.indexOf(document);
-    if (pos < 0) {
-      return;
-    }
-    this.documents.splice(pos, 1);
-    this.documentListChangedEvent.next(this.documents.slice());
+   this.documents.splice(pos, 1);
+   this.documentListChanged.next(this.documents.slice());
   }
 }

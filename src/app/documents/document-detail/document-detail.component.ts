@@ -1,45 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentService } from '../document.service'; // Adjust the path as necessary
+
 import { Document } from '../document.model';
-import { WindRefService } from '../../wind-ref.service'; // Adjust the path as necessary
+import { DocumentService } from '../document.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { WindRefService } from '../../wind-ref.service';
 
 @Component({
   selector: 'cms-document-detail',
+  standalone: false,
+  
   templateUrl: './document-detail.component.html',
-  styleUrls: ['./document-detail.component.css'],
-  standalone: false
+  styleUrl: './document-detail.component.css'
 })
-export class DocumentDetailComponent implements OnInit {
+export class DocumentDetailComponent implements OnInit{
   document: Document;
   nativeWindow: any;
+  id: string;
 
   constructor(
-    private route: ActivatedRoute,
     private documentService: DocumentService,
     private windowRefService: WindRefService,
-    private router: Router // Inject the Router service
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router) {
+      this.nativeWindow = windowRefService.getNativeWindow();
+    }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      // Fetch the document data using the document ID
-      this.document = this.documentService.getDocument(id);
-    });
-    this.nativeWindow = this.windowRefService.getNativeWindow();
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.id = params['id'];
+          this.document = this.documentService.getDocument(this.id);
+        }
+      )
   }
 
-  onView(): void {
-    if (this.document?.url) {
-      this.nativeWindow.open(this.document.url, '_blank');
+  onView() {
+    if (this.document.url) {
+      this.nativeWindow.open(this.document.url)
     }
   }
 
-  onDelete(): void {
-    if (confirm('Are you sure you want to delete this document?')) {
-      this.documentService.deleteDocument(this.document);
-      this.router.navigate(['/documents']); // Navigate back to the document list
-    }
-  }
+  onDelete() {
+    this.documentService.deleteDocument(this.document);
+    this.router.navigate(['/documents']);
+ }
+
 }

@@ -1,19 +1,21 @@
 <div class="panel panel-default">
     <!-- Panel Header -->
     <div class="panel-heading">
-      <h3 class="panel-title">Contacts</h3>
-      <a class="btn btn-success float-right" [routerLink]="['/contacts/new']">New Contact</a>
+        <h3 class="panel-title">Contacts</h3>
+        <button class="btn btn-success float-right" [routerLink]="['new']">New Contact</button>
     </div>
-  
+
     <!-- Panel Body -->
     <div class="panel-body">
-      <div class="row">
-        <!-- Iterate over contacts and display each one -->
-        <cms-contact-item
-          *ngFor="let contact of contacts"
-          [contact]="contact"
-        ></cms-contact-item>
-      </div>
+        <div class="row" cdkDropList id="contactList" [cdkDropListData]="contacts" [cdkDropListConnectedTo]="['groupList']">
+            <!-- Iterate over contacts and display each one -->
+            <cms-contact-item
+                *ngFor="let contact of contacts"
+                [contact]="contact"
+                [routerLink]="[contact.id]"
+                cdkDrag
+                [cdkDragData]="contact">
+            </cms-contact-item>
+        </div>
     </div>
-  </div>
-  
+</div>

@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.0.0",
+    "@angular/cdk": "^19.2.1",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
     "@angular/core": "^19.0.0",
@@ -20,7 +21,8 @@
     "@angular/router": "^19.0.0",
     "bootstrap": "^3.4.1",
     "i": "^0.3.7",
-    "rxjs": "~7.8.0",
+    "rxjs": "^6.6.7",
+    "rxjs-compat": "^6.6.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
